@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North Korean Themed Desktop</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #003580; /* Dark blue like the North Korean flag */
+            flex-direction: column;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #ce2029; /* Red from North Korean flag */
+            animation: load 3s ease-in-out forwards;
+        }
+
+        @keyframes load {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /* Menu Screen */
+        #menu-screen {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .menu {
+            position: relative;
+            z-index: 10;
+            background-color: #ce2029; /* Red */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 5px solid white;
+            width: 300px;
+        }
+
+        .menu h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu ul li {
+            margin: 10px 0;
+        }
+
+        .menu ul li a {
+            text-decoration: none;
+            color: #003580; /* Blue text */
+            background-color: white; /* White background */
+            padding: 10px 30px;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .menu ul li a:hover {
+            background-color: #ce2029; /* Red on hover */
+            color: white; /* White text on hover */
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ce2029;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 500px;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timeline div {
+            background-color: #003580;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Settings Modal Colors */
+        .color-option {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        /* Video Background */
+        #video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Rainbow animation keyframes */
+        @keyframes rainbowAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loading-text">Loading...</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+    
+    <div id="menu-screen">
+        <!-- Background Video -->
+        <video id="video-background" autoplay loop muted>
+            <source src="leaderbg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Menu Content -->
+        <div class="menu" id="main-menu">
+            <h1>Welcome to $LEADER.</h1>
+            <ul>
+                <li><a href="#" id="new-game-btn">New Game</a></li>
+                <li><a href="#" id="load-game-btn">Load Game</a></li>
+                <li><a href="#" id="settings-btn">Settings</a></li>
+                <li><a href="#" id="training-btn">Training</a></li>
+                <li><a href="#" id="exit-btn">Exit</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- New Game Modal (Image Gallery) -->
+    <div id="new-game-modal" class="modal">
+        <div class="modal-content">
+            <h2>Historical Images of North Korea</h2>
+            <div class="gallery">
+                <img src="placeholder.png" alt="Placeholder Image 1">
+                <img src="placeholder.png" alt="Placeholder Image 2">
+                <img src="placeholder.png" alt="Placeholder Image 3">
+            </div>
+            <div class="back-button" id="back-new-game">Back</div>
+        </div>
+    </div>
+
+    <!-- Load Game Modal (Timeline) -->
+    <div id="load-game-modal" class="modal">
+        <div class="modal-content">
+            <h2>North Korea Historical Timeline</h2>
+            <div class="timeline">
+                <div>Event in 1990</div>
+                <div>Event in 2000</div>
+                <div>Event in 2010</div>
+                <div>Event in 2020</div>
+            </div>
+            <div class="back-button" id="back-load-game">Back</div>
+        </div>
+    </div>
+
+    <!-- Settings Modal (Color Scheme) -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <h2>Change Color Scheme</h2>
+            <div class="color-option" id="red">Red</div>
+            <div class="color-option" id="green">Green</div>
+            <div class="color-option" id="blue">Blue</div>
+            <div class="color-option" id="rainbow">Rainbow</div>
+            <div class="back-button" id="back-settings">Back</div>
+        </div>
+    </div>
+
+    <script>
+        // Functionality for the New Game modal
+        document.getElementById('new-game-btn').addEventListener('click', function() {
+            showModal('new-game-modal');
+        });
+
+        document.getElementById('back-new-game').addEventListener('click', function() {
+            hideModal('new-game-modal');
+        });
+
+        // Functionality for the Load Game modal
+        document.getElementById('load-game-btn').addEventListener('click', function() {
+            showModal('load-game-modal');
+        });
+
+        document.getElementById('back-load-game').addEventListener('click', function() {
+            hideModal('load-game-modal');
+        });
+
+        // Functionality for the Settings modal
+        document.getElementById('settings-btn').addEventListener('click', function() {
+            showModal('settings-modal');
+        });
+
+        document.getElementById('back-settings').addEventListener('click', function() {
+            hideModal('settings-modal');
+        });
+
+        // Training redirects to dexscreener.com
+        document.getElementById('training-btn').addEventListener('click', function() {
+            window.location.href = 'https://dexscreener.com';
+        });
+
+        // Exit button functionality (alternative exit)
+        document.getElementById('exit-btn').addEventListener('click', function() {
+            if (confirm("Are you sure you want to exit?")) {
+                window.open('', '_self').close();  // Alternative way to try closing, but may not work in most browsers.
+                alert("Your browser prevented the page from closing. Please manually close the tab.");
+            }
+        });
+
+        // Modal show/hide functions
+        function showModal(modalId) {
+            document.getElementById('menu-screen').style.display = 'none';
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.getElementById('menu-screen').style.display = 'flex';
+        }
+
+        // Color Scheme Change in Settings Modal
+        const menuScreen = document.getElementById('menu-screen');
+        const mainMenu = document.getElementById('main-menu');
+        const modals = document.querySelectorAll('.modal-content');
+
+        document.getElementById('red').addEventListener('click', function() {
+            stopRainbowEffect(); // Stop rainbow if it's active
+            changeColorScheme('#ce2029');
+        });
+
+        document.getElementById('green').addEventListener('click', function() {
+            stopRainbowEffect();
+            changeColorScheme('green');
+        });
+
+        document.getElementById('blue').addEventListener('click', function() {
+            stopRainbowEffect();
+            changeColorScheme('blue');
+        });
+
+        document.getElementById('rainbow').addEventListener('click', function() {
+            applyRainbowEffect();
+        });
+
+        function changeColorScheme(color) {
+            menuScreen.style.backgroundColor = color;
+            mainMenu.style.backgroundColor = color;
+            modals.forEach(modal => {
+                modal.style.backgroundColor = color;
+            });
+        }
+
+        function applyRainbowEffect() {
+            menuScreen.style.background = 'linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet)';
+            menuScreen.style.backgroundSize = '400% 400%';
+            menuScreen.style.animation = 'rainbowAnimation 10s ease infinite';
+
+            mainMenu.style.background = 'linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet)';
+            mainMenu.style.backgroundSize = '400% 400%';
+            mainMenu.style.animation = 'rainbowAnimation 10s ease infinite';
+
+            modals.forEach(modal => {
+                modal.style.background = 'linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet)';
+                modal.style.backgroundSize = '400% 400%';
+                modal.style.animation = 'rainbowAnimation 10s ease infinite';
+            });
+        }
+
+        function stopRainbowEffect() {
+            // Stop the rainbow effect and reset to a solid color
+            menuScreen.style.animation = '';
+            menuScreen.style.background = '';
+            mainMenu.style.animation = '';
+            mainMenu.style.background = '';
+            modals.forEach(modal => {
+                modal.style.animation = '';
+                modal.style.background = '';
+            });
+        }
+
+        // Check for previous visit using localStorage
+        if (localStorage.getItem('hasVisited') === 'true') {
+            skipLoading();
+        } else {
+            // Show loading on first visit and set flag for future visits
+            window.onload = function() {
+                setTimeout(function() {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    document.getElementById('menu-screen').style.display = 'flex';
+                    localStorage.setItem('hasVisited', 'true');  // Set flag in localStorage
+                }, 3000); // 3 second loading screen
+            };
+        }
+
+        function skipLoading() {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('menu-screen').style.display = 'flex';
+        }
+
+    </script>
+</body>
+</html>
